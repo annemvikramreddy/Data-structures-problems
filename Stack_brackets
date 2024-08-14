@@ -1,0 +1,34 @@
+def find_longest_valid_bracket_sequence(brackets):
+    stack = []
+    start_indices = []
+    max_len = 0
+    
+    # Dictionary to check matching pairs
+    matching_bracket = {')': '(', ']': '[', '}': '{'}
+    
+    for i, bracket in enumerate(brackets):
+        if bracket in "({[":
+            # Push opening bracket onto stack and record its index
+            stack.append(bracket)
+            start_indices.append(i)
+        elif bracket in ")}]":
+            if stack and stack[-1] == matching_bracket[bracket]:
+                # Found a matching pair
+                stack.pop()
+                start_indices.pop()
+                # Calculate current valid sequence length
+                if start_indices:
+                    current_len = i - start_indices[-1]
+                else:
+                    current_len = i + 1
+                max_len = max(max_len, current_len)
+            else:
+                # Reset if invalid sequence found
+                stack = []
+                start_indices = []
+    
+    return max_len
+
+
+brackets_list = ['(', ')', '(', '(', '(', ')', '(', ')']
+print(find_longest_valid_bracket_sequence(brackets_list)) 
