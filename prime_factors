@@ -1,0 +1,26 @@
+def get_prime_factors(n):
+    # TODO: Implement the function that returns all prime factors of n
+    def is_prime(n):
+        if n <= 1:
+            return False
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+    
+    list_a = []
+    for i in range(2,int(n**0.5)+1):
+        if(n%i==0):
+            if(is_prime(i)):
+                list_a.append(i)
+            while (n%i==0):
+                n//=i
+                
+    
+    
+    if(is_prime(n)):
+        list_a.append(n)
+        print(list_a)
+    return list_a
+
+get_prime_factors(45)
