@@ -1,0 +1,36 @@
+def three_sum_sort(nums, k):
+    """
+    Return a list of unique triplets (a,b,c) from `nums` such that a + b + c == k.
+    Uses sorting + two-pointer sweep for each fixed first element.
+    """
+    nums.sort()
+    n = len(nums)
+    result = []
+
+    for i in range(n-2):
+        # skip duplicates for the first element
+        if i > 0 and nums[i] == nums[i-1]:
+            continue
+
+        left, right = i+1, n-1
+        while left < right:
+            s = nums[i] + nums[left] + nums[right]
+            if s == k:
+                result.append((nums[i], nums[left], nums[right]))
+                left  += 1
+                right -= 1
+                # skip duplicates for the second and third elements
+                while left < right and nums[left] == nums[left-1]:
+                    left += 1
+                while left < right and nums[right] == nums[right+1]:
+                    right -= 1
+            elif s < k:
+                left += 1
+            else:
+                right -= 1
+
+    return result
+
+# Example
+print(three_sum_sort([1, 2, -1, 0, -2, 1, 1], 0))
+# → [(-2, 1, 1), (-1, 0, 1)]
